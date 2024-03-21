@@ -14,6 +14,7 @@ export default function MainPage() {
 	useEffect(() => {
 		const fetchCompanies = async () => {
 			try {
+				console.log('I am here')
 				const response = await axiosWithAuth.get("https://onelab-levels-api.vercel.app/api/companies");
         setCompanies(response.data);
 				console.log(response.data)
