@@ -36,17 +36,18 @@ export default function SignupPage() {
 	 }
 	
 	return (
-		<AuthContainer>
-			
+		<>
+		<AuthContainer>		
 				<Form onSubmit={handleSubmit(onSubmit)}>
 				<AuthMessage>Hello Auth page</AuthMessage>
 					<Input {...register('email', { required: 'Email is required!' })} type="text" placeholder='Email' />
 					<Input {...register('password', { required: 'Password is required!' })} type="password" placeholder='Password' />
 					<Button>Register</Button>
 				</Form>
+				<Button2 onClick={handleBack}>Back</Button2>	
 				
 		</AuthContainer>
-			
+		</>	
 	)
 }
 
@@ -56,6 +57,7 @@ export const AuthContainer = styled.div`
     align-items: center;
     min-height: 100vh;
     background-color: #333;
+	position: relative;
 `;
 
 export const Form = styled.form`
@@ -97,6 +99,33 @@ export const Button = styled.button`
         background-color: #0056b3;
     }
 `;
+
+
+export const Button2 = styled.button`
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff6347;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    position: absolute;
+	bottom: 200px;
+
+
+
+    &:hover {
+        background-color: #e5533c;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.5);
+    }
+`;
+
 
 export const AuthMessage = styled.p`
     color: black;
