@@ -37,7 +37,7 @@ export default function SignupPage() {
 	
 	return (
 		<AuthContainer>
-			
+			<Button onClick={handleBack}>Back</Button>
 				<Form onSubmit={handleSubmit(onSubmit)}>
 				<AuthMessage>Hello Auth page</AuthMessage>
 					<Input {...register('email', { required: 'Email is required!' })} type="text" placeholder='Email' />
