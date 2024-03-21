@@ -25,6 +25,10 @@ export default function SignupPage() {
 			navigateTo("/signin")
 		}
 	})
+
+	const handleBack = () => {
+		navigateTo("/signin")
+	}
 	
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
 		console.log(data)
@@ -33,15 +37,16 @@ export default function SignupPage() {
 	
 	return (
 		<AuthContainer>
+			
 				<Form onSubmit={handleSubmit(onSubmit)}>
 				<AuthMessage>Hello Auth page</AuthMessage>
 					<Input {...register('email', { required: 'Email is required!' })} type="text" placeholder='Email' />
 					<Input {...register('password', { required: 'Password is required!' })} type="password" placeholder='Password' />
 					<Button>Register</Button>
-
 				</Form>
 				
-			</AuthContainer>
+		</AuthContainer>
+			
 	)
 }
 
