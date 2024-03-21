@@ -6,6 +6,7 @@ import SignupPage from './pages/SignupPage.tsx';
 import SigninPage from './pages/SigninPage.tsx';
 import EditPage from './pages/EditPage.tsx';
 import CompanyPage from './pages/CompanyPage.tsx';
+import Navbar from './components/Navbar.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -36,7 +37,8 @@ function App() {
   ])
   return (
      <div className="App">
-       <RouterProvider router={router}/>
+      <Navbar />
+      <RouterProvider router={router}/>
      </div>
    );
   }
