@@ -119,7 +119,6 @@ export default function SigninPage() {
 									<Button
 										type="submit"
 										variant="contained"
-										fullWidth="true"
 										size="large"
 										sx={{ 
 											mt: "10px",
@@ -140,7 +139,6 @@ export default function SigninPage() {
 										onClick={handleSubmitSignUp}
 										type="submit"
 										variant="contained"
-										fullWidth="true"
 										size="large"
 										sx={{ 
 											mt: "10px",
