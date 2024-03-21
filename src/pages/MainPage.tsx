@@ -86,6 +86,11 @@ export default function MainPage() {
         averageSalary: company.total / company.count
     }));
 	
+	const averageSalaryMap = averageSalaries.reduce((acc, curr) => {
+		acc[curr.name] = curr.averageSalary;
+		return acc;
+	}, {});
+
 	return (
 		<div>
 			<NavigationMenu>
@@ -117,19 +122,21 @@ export default function MainPage() {
                         </TableRow>
                     </thead>
                     <tbody>
-                        {companies.map((company, index) => {
-                            const salary = salaries.find(salary => salary.companyId === company._id);
-                            return (
-                                <TableRow key={index}>
-                                    <TableColumn>
-                                        <Link to={`/company/${company._id}`}>{company.name}</Link>
-                                    </TableColumn>
-                                    <TableColumn>{company.location?.name}</TableColumn>
-									<TableColumn>{salary?.salary.base}</TableColumn>
-                                </TableRow>
-                            );
-                        })}
-                    </tbody>
+						{companies.map((company, index) => {
+							const avgSalary = averageSalaryMap[company.name];
+							return (
+								<TableRow key={company._id || index}>
+									<TableColumn>
+										<Link to={`/company/${company._id}`}>{company.name}</Link>
+									</TableColumn>
+									<TableColumn>{company.location?.name}</TableColumn>
+									<TableColumn>
+										{avgSalary ? `${avgSalary.toFixed(2)}` : 'N/A'}
+									</TableColumn>
+								</TableRow>
+							);
+						})}
+    				</tbody>
                 </Table>
             </ScrollContainer>
 			<BarChart
