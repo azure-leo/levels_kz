@@ -9,10 +9,10 @@ export const getAccessToken = () => {
 	const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
 	return accessToken || null
 }
-
+const domain = window.location.hostname;
 export const saveTokenStorage = (accessToken: string) => {
 	Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
-		domain: 'localhost',
+		domain: domain,
 		sameSite: 'strict',
 		expires: 1
 	})
