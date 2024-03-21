@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { axiosWithAuth } from '../api/interceptors.ts'
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 export default function MainPage() {
 
@@ -60,6 +61,30 @@ export default function MainPage() {
 			setFilteredCompanies([]);
 		}
 	}, [search, companies]);
+
+	const averageSalariesByCompany = salaries.reduce((acc, curr) => {
+		const companyId = curr.company?._id;
+		const baseSalary = curr.salary?.base;
+	
+		if (!companyId || baseSalary === undefined) {
+			console.log('Skipping salary due to missing data', curr);
+			return acc; 
+		}
+	
+		if (!acc[companyId]) {
+			acc[companyId] = { total: 0, count: 0, name: curr.company.name };
+		}
+	
+		acc[companyId].total += baseSalary;
+		acc[companyId].count += 1;
+		return acc;
+	}, {});
+	
+
+    const averageSalaries = Object.values(averageSalariesByCompany).map(company => ({
+        name: company.name,
+        averageSalary: company.total / company.count
+    }));
 	
 	return (
 		<div>
@@ -88,6 +113,7 @@ export default function MainPage() {
                         <TableRow>
                             <TableHeader>Company Name</TableHeader>
                             <TableHeader>Location</TableHeader>
+							<TableHeader>Avg Salary</TableHeader>
                         </TableRow>
                     </thead>
                     <tbody>
@@ -99,12 +125,28 @@ export default function MainPage() {
                                         <Link to={`/company/${company._id}`}>{company.name}</Link>
                                     </TableColumn>
                                     <TableColumn>{company.location?.name}</TableColumn>
+									<TableColumn>{salary?.salary.base}</TableColumn>
                                 </TableRow>
                             );
                         })}
                     </tbody>
                 </Table>
             </ScrollContainer>
+			<BarChart
+                width={500}
+                height={300}
+                data={averageSalaries}
+                margin={{
+                    top: 5, right: 30, left: 20, bottom: 5,
+                }}
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="averageSalary" fill="#8884d8" />
+            </BarChart>
         </div>
     );
 }
