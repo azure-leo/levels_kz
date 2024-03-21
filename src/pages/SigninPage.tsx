@@ -90,7 +90,7 @@ export default function SigninPage() {
 							<Container>
 							 <Box height={35} />
 							 <Box sx={center}>
-							 	<Avatar sx={{ ml: "35px", mb: "4px", bgcolor: "#000000"}}>
+							 	<Avatar sx={{ ml: "35px", mb: "4px", bgcolor: "blue"}}>
 							 		<LockPerson></LockPerson>
 								</Avatar>
 								<Typography component="h1" variant="h4">
