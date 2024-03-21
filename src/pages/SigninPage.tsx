@@ -9,12 +9,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { Grid, Box, Container, Avatar, Typography, TextField, Button } from '@mui/material';
 import { LockPerson } from '@mui/icons-material';
+import Popup from '../components/Popup.tsx';
 
 
 export default function SigninPage() {
 		 const { register, handleSubmit, reset } = useForm<IAuthForm>({
 			mode: 'onChange'
 		 })
+
+		 const [errorMessage, setErrorMessage] = useState('');
 
 		 const navigateTo = useNavigate()
 
@@ -25,6 +28,9 @@ export default function SigninPage() {
 				reset()
 				console.log('SUCCESS')
 				navigateTo('/home')
+			},
+			onError() {
+				setErrorMessage('Invalid login. Please try again.')
 			}
 		 })
 
@@ -53,6 +59,10 @@ export default function SigninPage() {
 		 const handleSubmitSignUp = () => {
 			navigateTo("/signup")
 		 }
+
+		 const closePopup = () => {
+			setErrorMessage('');
+		};
 
 		 return (
 			<div>
@@ -160,7 +170,7 @@ export default function SigninPage() {
 						</Grid>
 					</Grid>
 				</Box>
-				
+				{errorMessage && <Popup message={errorMessage} color="red" onClose={closePopup} />}
 			</div>
 		)
 }
