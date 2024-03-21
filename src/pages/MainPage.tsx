@@ -11,12 +11,16 @@ export default function MainPage() {
 			try {
 				const response = await axiosWithAuth.get("https://onelab-levels-api.vercel.app/api/companies");
         setCompanies(response.data);
+				console.log(response.data)
 			} catch(error) {
 				console.error('Error fetching companies:', error);
 			}
 		}
 
 		fetchCompanies()
+		// for (let c in companies) {
+		// 	console.log(c.name)
+		// }
 	}, [])
 
 	
@@ -26,8 +30,9 @@ export default function MainPage() {
       <ul>
         {companies.map((company, index) => (
           <li key={index}>
-					<Link to={`/company/${company.id}`}>{company.name}</Link>
-				</li>
+						<Link to={`/company/${company._id}`}>{company.name} {company.location?.name}
+						</Link>
+					</li>
         ))}
       </ul>
 		</div>

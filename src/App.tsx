@@ -30,7 +30,7 @@ function App() {
       element: <EditPage/>
     },
     {
-      path: "/company/:companyId", // New route for individual company pages
+      path: "/company/:id", // New route for individual company pages
       element: <CompanyPage />
     }
   ])
