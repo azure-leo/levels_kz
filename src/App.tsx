@@ -1,10 +1,11 @@
 import React from 'react'
 import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage.tsx';
 import SignupPage from './pages/SignupPage.tsx';
 import SigninPage from './pages/SigninPage.tsx';
 import EditPage from './pages/EditPage.tsx';
+import CompanyPage from './pages/CompanyPage.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -28,12 +29,16 @@ function App() {
       path: "/edit",
       element: <EditPage/>
     },
+    {
+      path: "/company/:companyId", // New route for individual company pages
+      element: <CompanyPage />
+    }
   ])
   return (
-    <div className="App">
-      <RouterProvider router={router}/>
-    </div>
-  );
-}
+     <div className="App">
+       <RouterProvider router={router}/>
+     </div>
+   );
+  }
 
 export default App;

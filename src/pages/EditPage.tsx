@@ -7,7 +7,7 @@ import { addPage } from "../actions/Action.tsx";
 import { deletePage } from "../actions/Action.tsx";
 import styled from "styled-components";
 
-export default function Home(){
+export default function EditPage(){
     const pages = useSelector((state) => state.pages);
     const dispatch = useDispatch();
     const navigateTo = useNavigate();
@@ -22,7 +22,7 @@ export default function Home(){
     const handleCompanyChange = (event) => {
         setCompany(event.target.value);
     }
-    const handleLoctionChange = (event) => {
+    const handleLocationChange = (event) => {
         setLocation(event.target.value);
     }
     const handleExperienceChange = (event) => {
@@ -39,7 +39,10 @@ export default function Home(){
     }
     const onSave = () => {
         if (!company || !location || !experience || !annualSalary || !date || !specialization) return;
-        dispatch(addPage(company,location,experience,annualSalary,date,specialization));
+        dispatch(addPage(company,experience,location, annualSalary,date,specialization));
+
+
+        console.log(company, location, experience)
         //navigateTo("/");
     }
 
@@ -56,7 +59,7 @@ export default function Home(){
         </SearchContainer>
             <TableMenu>
                 <Input value={company} onChange={handleCompanyChange} type="text" name="company" placeholder="Company Name" className="myInputs"/>
-                <Input value={location} onChange={handleLoctionChange} type="text" name="location" placeholder="Location" className="myInputs"/>
+                <Input value={location} onChange={handleLocationChange} type="text" name="location" placeholder="Location" className="myInputs"/>
                 <Input value={experience} onChange={handleExperienceChange} type="text" name="experience" placeholder="Experience" className="myInputs"/>
                 <Input value={annualSalary} onChange={handleAnnualSalaryChange} type="text" name="annualSalary" placeholder="Annual Salary" className="myInputs"/>
                 <Input value={date} onChange={handleDateChange} type="text" name="date" placeholder="Date" className="myInputs"/>
