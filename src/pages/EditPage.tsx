@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,10 @@ import { useState } from "react";
 import { addPage } from "../actions/Action.tsx";
 import { deletePage } from "../actions/Action.tsx";
 import styled from "styled-components";
+import { axiosWithAuth } from '../api/interceptors.ts';
+import axios from 'axios';
 
-export default function EditPage(){
+export default function Home(){
     const pages = useSelector((state) => state.pages);
     const dispatch = useDispatch();
     const navigateTo = useNavigate();
@@ -22,7 +24,7 @@ export default function EditPage(){
     const handleCompanyChange = (event) => {
         setCompany(event.target.value);
     }
-    const handleLocationChange = (event) => {
+    const handleLoctionChange = (event) => {
         setLocation(event.target.value);
     }
     const handleExperienceChange = (event) => {
@@ -37,18 +39,47 @@ export default function EditPage(){
     const handleSpecializationChange = (event) => {
         setSpecialization(event.target.value);
     }
-    const onSave = () => {
-        if (!company || !location || !experience || !annualSalary || !date || !specialization) return;
-        dispatch(addPage(company,experience,location, annualSalary,date,specialization));
 
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        console.log(formData)
+    };
 
-        console.log(company, location, experience)
-        //navigateTo("/");
-    }
+    const [formData, setFormData] = useState({
+        name: '',
+        location: '',
+    });
+      
 
-    // const handleChange = (event) => {
-        
-    // }
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+    //   if (!formData.company || !formData.location || !formData.experience || !formData.annualSalary || !formData.date || !formData.specialization) {
+    //       console.error("All fields are required");
+    //       return;
+    //   }
+      const send = {
+        name: company,
+        location: {
+            name: location
+        }
+      }
+      console.log(send)
+      console.log("Submitting:", formData);
+  
+      try {
+          const response = await axiosWithAuth.post('https://onelab-levels-api.vercel.app/api/companies', send);
+          console.log('Response from server:', response.data);
+          
+          setFormData({
+              name: '',
+              location: '',
+          });
+  
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  };
+   
     return (
         <NavigationMenu>
             <SearchContainer>
@@ -59,12 +90,12 @@ export default function EditPage(){
         </SearchContainer>
             <TableMenu>
                 <Input value={company} onChange={handleCompanyChange} type="text" name="company" placeholder="Company Name" className="myInputs"/>
-                <Input value={location} onChange={handleLocationChange} type="text" name="location" placeholder="Location" className="myInputs"/>
+                <Input value={location} onChange={handleLoctionChange} type="text" name="location" placeholder="Location" className="myInputs"/>
                 <Input value={experience} onChange={handleExperienceChange} type="text" name="experience" placeholder="Experience" className="myInputs"/>
                 <Input value={annualSalary} onChange={handleAnnualSalaryChange} type="text" name="annualSalary" placeholder="Annual Salary" className="myInputs"/>
                 <Input value={date} onChange={handleDateChange} type="text" name="date" placeholder="Date" className="myInputs"/>
                 <Input value={specialization} onChange={handleSpecializationChange} type="text" name="specialization" placeholder="Specialization" className="myInputs"/>
-                <SaveButton onClick={onSave} className="pgbutton">Save</SaveButton>
+                <SaveButton onClick={handleSubmit} className="pgbutton">Save</SaveButton>
                 <Table>
                     <thead>
                     <TableRow>  
